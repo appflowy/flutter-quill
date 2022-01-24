@@ -20,8 +20,6 @@ import 'delegate.dart';
 import 'editor.dart';
 import 'text_block.dart';
 import 'text_line.dart';
-import 'video_app.dart';
-import 'youtube_video_app.dart';
 
 class QuillSimpleViewer extends StatefulWidget {
   const QuillSimpleViewer({
@@ -60,8 +58,7 @@ class QuillSimpleViewer extends StatefulWidget {
   _QuillSimpleViewerState createState() => _QuillSimpleViewerState();
 }
 
-class _QuillSimpleViewerState extends State<QuillSimpleViewer>
-    with SingleTickerProviderStateMixin {
+class _QuillSimpleViewerState extends State<QuillSimpleViewer> with SingleTickerProviderStateMixin {
   late DefaultStyles _styles;
   final LayerLink _toolbarLayerLink = LayerLink();
   final LayerLink _startHandleLayerLink = LayerLink();
@@ -90,9 +87,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
     super.didChangeDependencies();
     final parentStyles = QuillStyles.getStyles(context, true);
     final defaultStyles = DefaultStyles.getInstance(context);
-    _styles = (parentStyles != null)
-        ? defaultStyles.merge(parentStyles)
-        : defaultStyles;
+    _styles = (parentStyles != null) ? defaultStyles.merge(parentStyles) : defaultStyles;
 
     if (widget.customStyles != null) {
       _styles = _styles.merge(widget.customStyles!);
@@ -101,8 +96,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
 
   EmbedBuilder get embedBuilder => widget.embedBuilder ?? _defaultEmbedBuilder;
 
-  Widget _defaultEmbedBuilder(
-      BuildContext context, leaf.Embed node, bool readOnly) {
+  Widget _defaultEmbedBuilder(BuildContext context, leaf.Embed node, bool readOnly) {
     assert(!kIsWeb, 'Please provide EmbedBuilder for Web');
     switch (node.value.type) {
       case 'image':
@@ -112,14 +106,6 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
             : isBase64(imageUrl)
                 ? Image.memory(base64.decode(imageUrl))
                 : Image.file(io.File(imageUrl));
-      case 'video':
-        final videoUrl = node.value.data;
-        if (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be')) {
-          return YoutubeVideoApp(
-              videoUrl: videoUrl, context: context, readOnly: readOnly);
-        }
-        return VideoApp(
-            videoUrl: videoUrl, context: context, readOnly: readOnly);
       default:
         throw UnimplementedError(
           'Embeddable type "${node.value.type}" is not supported by default '
@@ -177,15 +163,13 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
                         physics: const NeverScrollableScrollPhysics(),
                         child: Transform.scale(
                             scale: widget.truncateScale!,
-                            alignment:
-                                widget.truncateAlignment ?? Alignment.topLeft,
+                            alignment: widget.truncateAlignment ?? Alignment.topLeft,
                             child: child)))));
       } else {
         child = Container(
             height: widget.truncateHeight,
             width: widget.truncateWidth,
-            child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(), child: child));
+            child: SingleChildScrollView(physics: const NeverScrollableScrollPhysics(), child: child));
       }
     }
 
@@ -211,9 +195,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
             styles: _styles,
             enableInteractiveSelection: false,
             hasFocus: false,
-            contentPadding: attrs.containsKey(Attribute.codeBlock.key)
-                ? const EdgeInsets.all(16)
-                : null,
+            contentPadding: attrs.containsKey(Attribute.codeBlock.key) ? const EdgeInsets.all(16) : null,
             embedBuilder: embedBuilder,
             cursorCont: _cursorCont,
             indentLevelCounts: indentLevelCounts,
@@ -238,8 +220,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
     return result;
   }
 
-  EditableTextLine _getEditableTextLineFromNode(
-      Line node, BuildContext context) {
+  EditableTextLine _getEditableTextLineFromNode(Line node, BuildContext context) {
     final textLine = TextLine(
       line: node,
       textDirection: _textDirection,
@@ -266,8 +247,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
     return editableTextLine;
   }
 
-  Tuple2<double, double> _getVerticalSpacingForLine(
-      Line line, DefaultStyles? defaultStyles) {
+  Tuple2<double, double> _getVerticalSpacingForLine(Line line, DefaultStyles? defaultStyles) {
     final attrs = line.style.attributes;
     if (attrs.containsKey(Attribute.header.key)) {
       final int? level = attrs[Attribute.header.key]!.value;
@@ -286,8 +266,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
     return defaultStyles!.paragraph!.verticalSpacing;
   }
 
-  Tuple2<double, double> _getVerticalSpacingForBlock(
-      Block node, DefaultStyles? defaultStyles) {
+  Tuple2<double, double> _getVerticalSpacingForBlock(Block node, DefaultStyles? defaultStyles) {
     final attrs = node.style.attributes;
     if (attrs.containsKey(Attribute.blockQuote.key)) {
       return defaultStyles!.quote!.verticalSpacing;
@@ -303,8 +282,7 @@ class _QuillSimpleViewerState extends State<QuillSimpleViewer>
     return const Tuple2(0, 0);
   }
 
-  void _nullSelectionChanged(
-      TextSelection selection, SelectionChangedCause cause) {}
+  void _nullSelectionChanged(TextSelection selection, SelectionChangedCause cause) {}
 }
 
 class _SimpleViewer extends MultiChildRenderObjectWidget {
@@ -350,8 +328,7 @@ class _SimpleViewer extends MultiChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant RenderEditor renderObject) {
+  void updateRenderObject(BuildContext context, covariant RenderEditor renderObject) {
     renderObject
       ..document = document
       ..setContainer(document.root)
