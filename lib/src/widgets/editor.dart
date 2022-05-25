@@ -568,6 +568,9 @@ class _QuillEditorSelectionGestureDetectorBuilder extends EditorTextSelectionGes
             case PointerDeviceKind.unknown:
               getRenderEditor()!.selectWordEdge(SelectionChangedCause.tap);
               break;
+            case PointerDeviceKind.trackpad:
+              // TODO: Handle this case.
+              break;
           }
           break;
         case TargetPlatform.android:

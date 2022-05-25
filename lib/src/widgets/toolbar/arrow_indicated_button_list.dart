@@ -7,18 +7,15 @@ import 'package:flutter/material.dart';
 /// The arrow indicators are automatically hidden if the list is not
 /// scrollable in the direction of the respective arrow.
 class ArrowIndicatedButtonList extends StatefulWidget {
-  const ArrowIndicatedButtonList({required this.buttons, Key? key})
-      : super(key: key);
+  const ArrowIndicatedButtonList({required this.buttons, Key? key}) : super(key: key);
 
   final List<Widget> buttons;
 
   @override
-  _ArrowIndicatedButtonListState createState() =>
-      _ArrowIndicatedButtonListState();
+  _ArrowIndicatedButtonListState createState() => _ArrowIndicatedButtonListState();
 }
 
-class _ArrowIndicatedButtonListState extends State<ArrowIndicatedButtonList>
-    with WidgetsBindingObserver {
+class _ArrowIndicatedButtonListState extends State<ArrowIndicatedButtonList> with WidgetsBindingObserver {
   final ScrollController _controller = ScrollController();
   bool _showLeftArrow = false;
   bool _showRightArrow = false;
@@ -31,7 +28,7 @@ class _ArrowIndicatedButtonListState extends State<ArrowIndicatedButtonList>
     // Listening to the WidgetsBinding instance is necessary so that we can
     // hide the arrows when the window gets a new size and thus the toolbar
     // becomes scrollable/unscrollable.
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     // Workaround to allow the scroll controller attach to our ListView so that
     // we can detect if overflow arrows need to be shown on init.
@@ -55,7 +52,7 @@ class _ArrowIndicatedButtonListState extends State<ArrowIndicatedButtonList>
   @override
   void dispose() {
     _controller.dispose();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -63,10 +60,8 @@ class _ArrowIndicatedButtonListState extends State<ArrowIndicatedButtonList>
     if (!mounted) return;
 
     setState(() {
-      _showLeftArrow =
-          _controller.position.minScrollExtent != _controller.position.pixels;
-      _showRightArrow =
-          _controller.position.maxScrollExtent != _controller.position.pixels;
+      _showLeftArrow = _controller.position.minScrollExtent != _controller.position.pixels;
+      _showRightArrow = _controller.position.maxScrollExtent != _controller.position.pixels;
     });
   }
 

@@ -493,7 +493,7 @@ class RawEditorState extends EditorState
         ..startCursorTimer();
     }
 
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return;
       }
@@ -544,10 +544,10 @@ class RawEditorState extends EditorState
     _cursorCont.startOrStopCursorTimerIfNeeded(_hasFocus, widget.controller.selection);
     _updateOrDisposeSelectionOverlayIfNeeded();
     if (_hasFocus) {
-      WidgetsBinding.instance!.addObserver(this);
+      WidgetsBinding.instance.addObserver(this);
       _showCaretOnScreen();
     } else {
-      WidgetsBinding.instance!.removeObserver(this);
+      WidgetsBinding.instance.removeObserver(this);
     }
     updateKeepAlive();
   }
@@ -568,7 +568,7 @@ class RawEditorState extends EditorState
     }
 
     _showCaretOnScreenScheduled = true;
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       if (widget.scrollable || _scrollController.hasClients) {
         _showCaretOnScreenScheduled = false;
 
@@ -709,6 +709,16 @@ class RawEditorState extends EditorState
 
   @override
   void selectAll(SelectionChangedCause cause) {}
+
+  @override
+  void insertTextPlaceholder(Size size) {
+    // TODO: implement insertTextPlaceholder
+  }
+
+  @override
+  void removeTextPlaceholder() {
+    // TODO: implement removeTextPlaceholder
+  }
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
